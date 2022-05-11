@@ -1,4 +1,4 @@
-<script type="text/javascript">
+
       
 
       jQuery(document).ready(function () {
@@ -328,15 +328,5 @@
         //system init
         quizzSystem();
       });
-    </script>
 
-    <!-- Load Google Places API -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIzM453CSgcRbq9KOVb601H6Cr5H0gZX0&libraries=places&language=pt-BR"></script>
-
-    <!-- Set autocomplete input -->
-    <script type="text/javascript" defer>
-        var gpaInput = document.getElementById("address");
-        var gpaInputCondo = document.getElementById("condo-address");
-        var autocomplete = new google.maps.places.Autocomplete(gpaInput);
-        var autocomplete = new google.maps.places.Autocomplete(gpaInputCondo);
-    </script>
+    
