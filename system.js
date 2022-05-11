@@ -3,7 +3,7 @@
 
       jQuery(document).ready(function () {
         const consoleOutput = $(".console-output");
-
+        console.log('script works')
         let userResidencia = {
           equationScore: Number,
           footage: Number,
