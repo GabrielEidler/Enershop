@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enershop Quizz</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body style="width: 100%; height: 100vh">
+    <div
+      class="global-wrapper"
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+      "
+    >
+      Answer the following questions to get your recommendation:
+  
+     
+      <form class="initial-form" style="margin: 24px 0px">
+        <div style="margin: 8px 0px">Início</div>
+
+        <input type="radio" name="structure-type" value="1" />
+        <label for="1">Residência</label><br />
+        <input type="radio" name="structure-type" value="2" />
+        <label for="2">Condomínio</label><br />
+        <input type="radio" name="structure-type" value="3" />
+        <label for="3">Seu Negócio</label><br />
+      </form>
+      
+      <!--BUSINESS FORM START-->
+      <form class="condo-form" style="margin: 8px 0px">
+        <div
+          class="comercial-question_1"
+          style="margin: 8px 0px; display: none"
+        >
+          <div style="margin: 8px 0px">1/5</div>
+          <input type="radio" name="condo-type" value="casas" />
+          <label for="casas">Casas</label><br />
+          <input type="radio" name="condo-type" value="apartamentos" />
+          <label for="apartamentos">Apartamentos</label><br />
+          <input type="radio" name="condo-type" value="salas" />
+          <label for="salas">Salas Comerciais</label><br />
+        </div>
+      </form>
+      <!--BUSINESS FORM END-->
+
+      <!--CONDO FORM START-->
+      <form class="condo-form" style="margin: 8px 0px">
+        <div
+          class="condo-question_1"
+          style="margin: 8px 0px; display: none"
+        >
+          <div style="margin: 8px 0px">1/5</div>
+          <input type="radio" name="condo-type" value="casas" />
+          <label for="casas">Casas</label><br />
+          <input type="radio" name="condo-type" value="apartamentos" />
+          <label for="apartamentos">Apartamentos</label><br />
+          <input type="radio" name="condo-type" value="salas" />
+          <label for="salas">Salas Comerciais</label><br />
+        </div>
+        <div
+          class="condo-question_2"
+          style="margin: 8px 0px; display: none"
+        >
+          <div style="margin: 8px 0px">2/5</div>
+          <input class="condo-footage" style="margin: 4px 0px" type="number" placeholder="Metragem(M2)" ></input>
+        </div>
+        <div
+        class="condo-question_3"
+        style="margin: 8px 0px; display: none"
+      >
+        <div style="margin: 8px 0px">3/5</div>
+        <input class="condo-units" style="margin: 4px 0px" type="number" placeholder="Unidades" ></input>
+      </div>
+      <div
+          class="condo-question_4"
+          style="margin: 8px 0px; display: none"
+        >
+          <div style="margin: 8px 0px">4/5</div>
+          <input class="condo-address" id="condo-address" type="text" style="margin: 4px 0px">Endereço</input>
+      </div>
+      <div
+          class="condo-question_5"
+          style="margin: 8px 0px; display: none"
+        >
+          <div style="margin: 8px 0px">5/5 </div>
+          <input class="condo-cost" style="margin: 4px 0px" type="number" placeholder="Gasto Mensal (R$)" ></input>
+      </div>
+      <div
+          class="condo-question_6"
+          style="margin: 8px 0px; display: none"
+        >
+          <div style="margin: 8px 0px">1/5</div>
+          <input type="radio" name="condo-voltage" value="a" />
+          <label for="a">Tensão A</label><br />
+          <input type="radio" name="condo-voltage" value="b" />
+          <label for="b">Tensão B</label><br />
+          <input type="radio" name="condo-voltage" value="none" />
+          <label for="none">Não Sei</label><br />
+      </div>
+      </form>
+      <!--CONDO FORM END-->
+
+      <!--RESIDENCE FORM START-->
+      <form class="residence-form" style="margin: 8px 0px">
+        <div
+          class="residence-question_1"
+          style="margin: 8px 0px; display: none"
+        >
+          <div style="margin: 8px 0px">1/5</div>
+          <input type="radio" name="residence-type" value="casa" />
+          <label for="casa">Casa</label><br />
+          <input type="radio" name="residence-type" value="apartamento" />
+          <label for="apartamento">Apartamento</label><br />
+        </div>
+        <div
+          class="residence-question_2"
+          style="margin: 8px 0px; display: none"
+        >
+          <div style="margin: 8px 0px">2/5</div>
+          <input class="footage" style="margin: 4px 0px" type="number" placeholder="Metragem(M2)" ></input>
+        </div>
+        <div
+          class="residence-question_3"
+          style="margin: 8px 0px; display: none"
+        >
+          <div style="margin: 8px 0px">3/5</div>
+          <input type="radio" name="floors" value="1" />
+          <label for="1">1 Andar</label><br />
+          <input type="radio" name="floors" value="2" />
+          <label for="2">2 Andares</label><br />
+          <input type="radio" name="floors" value="3" />
+          <label for="3">3 Andares</label><br />
+          <input type="radio" name="floors" value="4" />
+          <label for="4">4 Andares</label><br />
+        </div>
+        <div
+          class="residence-question_4"
+          style="margin: 8px 0px; display: none"
+        >
+          <div style="margin: 8px 0px">4/5</div>
+          <input class="address" id="address" type="text" style="margin: 4px 0px">Endereço</input>
+        </div>
+        <div
+          class="residence-question_5"
+          style="margin: 8px 0px; display: none"
+        >
+          <div style="margin: 8px 0px">5/5 </div>
+          <input class="cost" style="margin: 4px 0px" type="number" placeholder="Gasto Mensal (R$)" ></input>
+        </div>
+      </form>
+      <!--RESIDENCE FORM END-->
+
+      <div>
+        <button class="button-previous">Anterior</button>
+        <button class="button-next">Próximo</button>
+      </div>
+
+      <div style="display: flex; flex-direction: row; margin: 16px 0px">
+        Console:
+        <div style="color: red" class="console-output"></div>
+      </div>
+    </div>
+
+    <script>
+      // Verify Yes or No
+      // Verify F(x) score
+      // Verify if Address has Service / Product GD available (We'll get a list later on)
+      // Allocate viable options
+
+      jQuery(document).ready(function () {
+        const consoleOutput = $(".console-output");
+
+        let userResidencia = {
+          equationScore: Number,
+          footage: Number,
+          city: String,
+          monthyCost: String,
+          type: String, // Casa ou Apartamento
+          floors: String, // Nº de andares
+        };
+        let userCondominio = {
+          equationScore: Number,
+          footage: Number,
+          city: String,
+          monthyCost: String,
+          type: String, // Casas, Apartamentos ou Salas Comerciais
+          floors: String, // Nº de andares
+          units: Number, // Número de unidades
+          voltage: String, // Alta,  Baixa (A ou B) ou Nãi sei (Null)
+        };
+        let userNegocio = {
+          equationScore: Number,
+          footage: Number,
+          monthyCost: String,
+          Type: String, // tipo de negócio, select field ou digitação
+          floors: String, // Nº de andares
+          locationAmount: Number, // Número de localizações
+          locations: [String],
+          voltage: String, // Alta,  Baixa (A ou B) ou Nãi sei (Null)
+        };
+
+        const residence_Recommendation_Calculator = (userObject) =>{
+          //opções GDC, GDD, INSTALAÇÃO MANUAL, CONSULTORIA, PRODUTOS COMERCIAIS, PRODUTOS RESIDENCIAIS
+          //let gdc = true;
+          //let instManual = true;
+          //let consultoria = true;
+          //let prodResidenciais = true;
+          
+          
+          if (userObject.equationScore < 9.8) {
+            if (userObject.type === 'apartamento') {
+              console.log('Nossa recomendação: ',{
+                r1: 'GDC',
+                r2: 'Produtos Residenciais'
+              })
+            }else{
+              console.log('Nossa recomendação: ',{
+                r1: 'GDC',
+                r2: 'Serviços',
+                r3: 'Produtos Residenciais'
+              })
+            }
+          }else {
+            if (userObject.type === 'apartamento') {
+              console.log('Nossa recomendação: ',{
+                r1: 'GDC',
+                r2: 'Produtos Residenciais'
+              })
+            }else{
+              console.log('Nossa recomendação: ',{
+                r1: 'Serviços',
+                r2: 'GDC',
+                r3: 'Produtos Residenciais'
+              })
+            }
+
+          }
+        }
+
+
+
+        const quizzSystem = () => {
+          let structureType = false;
+
+          // FIRST FORM LISTENER
+          $(".initial-form input").on("change", function () {
+            structureType = Number(
+              $("input[name=structure-type]:checked", ".initial-form").val()
+            );
+          });
+
+          // FIRST NEXT BUTTON
+          const button_start = () => {
+            if (
+              $("input[name=structure-type]:checked", ".initial-form").val()
+            ) {
+              // Hides initial question
+              $(".initial-form").hide();
+              consoleOutput.text("");
+
+              if (structureType === 1) {
+                residence_start(); // setup residence question system
+              } else if (structureType === 2) {
+                condoQuestions(); // setup condo question system
+              } else if (structureType === 3) {
+                businessQuestions(); // setup business question system
+              }
+            } else {
+              //
+              consoleOutput.text("Escolha uma opção antes de continuar");
+            }
+          };
+
+          $(".button-next").bind("click", button_start);
+
+          // RESIDENCE GAME
+          const residence_start = () => {
+            let residenceType = false;
+            let footage = 0;
+            let question = 1;
+            let floors = 0;
+            let address = '';
+            let cost = 0;
+
+            console.log("residencia");
+            $(".residence-question_1").show();
+            $(".button-next").unbind("click", button_start);
+
+            const button_residence_5 = () => {
+                address = $('.address').val();
+                if ( address !== '' ) 
+                {
+                  
+                  consoleOutput.text("");
+                  console.log('cost: ',cost)
+                  //question = 6;
+                  let score = (cost / (footage / floors));
+                  var roundedScore = Math.round((score + Number.EPSILON) * 100) / 100;
+
+                  userResidencia = {
+                    equationScore: roundedScore,
+                    footage: footage,
+                    city: address,
+                    monthyCost: cost,
+                    type: residenceType, // Casa ou Apartamento
+                    floors: floors, // Nº de andares
+                  }
+                  JSON.stringify(userResidencia)
+                  console.log('quizzObject', userResidencia)
+                  residence_Recommendation_Calculator(userResidencia);
+                } else {
+                  //
+                  consoleOutput.text("resposta 5/5 vazia");
+                }
+            };
+
+            const button_residence_4 = () => {
+                address = $('.address').val();
+                if ( address !== '' ) 
+                {
+                  
+                  // Hides initial question
+                  $(".residence-question_4").hide();
+                  $(".residence-question_5").show();
+                  $(".button-next").unbind("click", button_residence_4);
+                  $(".button-next").bind("click", button_residence_5);
+                  consoleOutput.text("");
+                  console.log('address: ',address)
+                  question = 5;
+                } else {
+                  //
+                  consoleOutput.text("resposta 4/5 vazia");
+                }
+            };
+
+            const button_residence_3 = () => {
+                if ( Number(floors) !== 0 ) 
+                {
+                  
+                  // Hides initial question
+                  $(".residence-question_3").hide();
+                  $(".residence-question_4").show();
+                  $(".button-next").unbind("click", button_residence_3);
+                  $(".button-next").bind("click", button_residence_4);
+                  consoleOutput.text("");
+                  console.log('floors: ',floors)
+                  question = 4;
+                } else {
+                  //
+                  consoleOutput.text("resposta 3/5 vazia");
+                }
+            };
+
+
+            const button_residence_2 = () => {
+                
+              if ( Number(footage) !== 0 ) 
+              {
+                
+                // hide current, show next
+                $(".residence-question_2").hide();
+                $(".residence-question_3").show();
+                $(".button-next").unbind("click", button_residence_2);
+                $(".button-next").bind("click", button_residence_3);
+
+                consoleOutput.text("");
+                console.log('footage: ',footage)
+                question = 3;
+              } else {
+                //
+                consoleOutput.text("resposta 2/5 vazia");
+              }
+              
+            };
+
+            const button_residence_1 = () => {
+              $(".button-next").unbind("click", button_start);
+              if ( $("input[name=residence-type]:checked", ".residence-form").val() ) 
+              {
+                
+                // Hides initial question
+                $(".residence-question_1").hide();
+                $(".residence-question_2").show();
+                $(".button-next").unbind("click", button_residence_1);
+                $(".button-next").bind("click", button_residence_2);
+                consoleOutput.text("");
+                console.log($("input[name=residence-type]:checked", ".residence-form").val())
+                question = 2;
+                // call next question
+              } else {
+                //
+                consoleOutput.text("resposta 1/5 vazia");
+              }
+              
+            };
+            $(".button-next").bind("click", button_residence_1);
+
+
+            // Back button
+            $('.button-previous').click(()=>{
+              $(".button-next").unbind("click", button_residence_1);
+              $(".button-next").unbind("click", button_residence_2);
+              $(".button-next").unbind("click", button_residence_3);
+              $(".button-next").unbind("click", button_residence_4);
+              $(".button-next").unbind("click", button_residence_5);
+              console.log('question before: ', question)
+                switch (question) {
+                    case 1:
+                        $(".residence-question_1").hide();
+                        $(".initial-form").show();
+                        $(".button-next").bind("click", button_start);
+                        question = 0;
+                        break;
+                    case 2:
+                        $(".residence-question_2").hide();
+                        $(".residence-question_1").show();
+                        $(".button-next").bind("click", button_residence_1);
+                        question = 1;
+                        break;
+                    case 3:
+                        $(".residence-question_3").hide();
+                        $(".residence-question_2").show();
+                        $(".button-next").bind("click", button_residence_2);
+                        question = 2;
+                        break;
+                    case 4:
+                        $(".residence-question_4").hide();
+                        $(".residence-question_3").show();
+                        $(".button-next").bind("click", button_residence_3);
+                        question = 3;
+                        break;
+                    case 5:
+                        $(".residence-question_5").hide();
+                        $(".residence-question_4").show();
+                        $(".button-next").bind("click", button_residence_4);
+                        question = 4;
+                        break;
+                    case 6:
+                        $(".button-next").bind("click", button_residence_5);
+                        question = 5;
+                        break;
+                
+                    default:
+                        break;
+                }
+            })
+            
+            // listener for 1 and 2
+            $(".residence-form input").on("change", () => {
+              residenceType = $(
+                "input[name=residence-type]:checked",
+                ".residence-form"
+              ).val();
+
+              footage = $('.footage').val();
+
+              address = $('.address').val();
+
+              cost = $('.cost').val();
+
+            });
+
+            // listener for 3
+            $('input[type=radio][name=floors]').change(function() {
+                floors = $(
+                "input[name=floors]:checked",
+                ".residence-form"
+                ).val();
+            });
+                
+
+            
+
+            
+            
+          };
+
+
+
+
+
+
+          // CONDO AND BUSINESS CODE BELOW
+
+          const condoQuestions = () => {
+            console.log("condo system start");
+          };
+
+          const businessQuestions = () => {
+            console.log("business system start");
+          };
+        };
+
+        //system init
+        quizzSystem();
+      });
+    </script>
+
+    <!-- Load Google Places API -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIzM453CSgcRbq9KOVb601H6Cr5H0gZX0&libraries=places&language=pt-BR"></script>
+
+    <!-- Set autocomplete input -->
+    <script defer>
+        var gpaInput = document.getElementById("address");
+        var gpaInputCondo = document.getElementById("condo-address");
+        var autocomplete = new google.maps.places.Autocomplete(gpaInput);
+        var autocomplete = new google.maps.places.Autocomplete(gpaInputCondo);
+    </script>
+  </body>
+</html>
