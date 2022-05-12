@@ -306,15 +306,8 @@
             structureType = Number(
               $("input[name=structure-type]:checked", ".initial-form").val()
             );
-          });
 
-          // FIRST NEXT BUTTON
-          const button_start = () => {
-            if (
-              $("input[name=structure-type]:checked", ".initial-form").val()
-            ) {
-              // Hides initial question
-              $(".initial-form").hide();
+            $(".initial-form").hide();
               consoleOutput.text("");
 
               if (structureType === 1) {
@@ -324,10 +317,31 @@
               } else if (structureType === 3) {
                 businessQuestions(); // setup business question system
               }
-            } else {
-              //
-              consoleOutput.text("Escolha uma opção antes de continuar");
-            }
+          });
+
+          // FIRST NEXT BUTTON
+          const button_start = () => {
+            /*
+                if (
+                  $("input[name=structure-type]:checked", ".initial-form").val()
+                ) {
+                  // Hides initial question
+                  $(".initial-form").hide();
+                  consoleOutput.text("");
+
+                  if (structureType === 1) {
+                    residence_start(); // setup residence question system
+                  } else if (structureType === 2) {
+                    condoQuestions(); // setup condo question system
+                  } else if (structureType === 3) {
+                    businessQuestions(); // setup business question system
+                  }
+                } else {
+                  //
+                  consoleOutput.text("Escolha uma opção antes de continuar");
+                }
+            */
+            
           };
 
           $(".button-next").bind("click", button_start);
