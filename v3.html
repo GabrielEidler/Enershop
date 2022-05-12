@@ -11,7 +11,7 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body style="width: 100%; height: 100vh">
+  <body style="width: 100%; height: 100vh; background-color: rgb(36, 36, 36); color: white; font-size: 20px;">
     <div
       class="global-wrapper"
       style="
@@ -150,7 +150,7 @@
               class="condo-question_6"
               style="margin: 8px 0px;"
             >
-              <div style="margin: 8px 0px">1/5</div>
+              <div style="margin: 8px 0px">Voltagem A/B</div>
               <input type="radio" name="condo-voltage" value="a" />
               <label for="a">Tensão A</label><br />
               <input type="radio" name="condo-voltage" value="b" />
@@ -242,16 +242,15 @@
           equationScore: Number,
           footage: Number,
           city: String,
-          monthyCost: String,
+          monthlyCost: String,
           type: String, // Casas, Apartamentos ou Salas Comerciais
-          floors: String, // Nº de andares
           units: Number, // Número de unidades
           voltage: String, // Alta,  Baixa (A ou B) ou Nãi sei (Null)
         };
         let userNegocio = {
           equationScore: Number,
           footage: Number,
-          monthyCost: String,
+          monthlyCost: String,
           Type: String, // tipo de negócio, select field ou digitação
           floors: String, // Nº de andares
           locationAmount: Number, // Número de localizações
@@ -333,6 +332,158 @@
 
           $(".button-next").bind("click", button_start);
 
+
+          const condoQuestions = () => {
+            console.log("condo system start");
+            let footage = 0;
+            let city = '';
+            let cost = 0;
+            let type = '';
+            let floors = 0;
+            let units = 0;
+            let voltage = '';
+
+            $(".condo-question_1").show();
+            $(".button-next").unbind("click", button_start);
+            
+            const button_condo_5 = () => {
+                
+                if ( Number(cost) !== 0 ) 
+                {
+                  
+                  consoleOutput.text("");
+                  console.log('cost: ',cost)
+                  //question = 6;
+                  let score = (cost / (footage / floors));
+                  var roundedScore = Math.round((score + Number.EPSILON) * 100) / 100;
+
+                  userCondominio = {
+                    equationScore: roundedScore,
+                    footage: footage,
+                    city: address,
+                    monthyCost: cost,
+                    type: type, // Casa ou Apartamento
+                    units: units, // Nº de andares
+                    voltage: voltage
+                  }
+                  JSON.stringify(userCondominio)
+                  console.log('quizzObject', userCondominio)
+                  //condo_Recommendation_Calculator(userCondominio);
+                } else {
+                  //
+                  consoleOutput.text("resposta 5/5 vazia");
+                }
+            };
+
+            const button_condo_4 = () => {
+                address = $('.condo-address').val();
+                if ( address !== '' ) 
+                {
+                  
+                  // Hides initial question
+                  $(".condo-question_4").hide();
+                  $(".condo-question_5").show();
+                  $(".button-next").unbind("click", button_condo_4);
+                  $(".button-next").bind("click", button_condo_5);
+                  consoleOutput.text("");
+                  console.log('address: ',address)
+                  question = 5;
+                } else {
+                  //
+                  consoleOutput.text("resposta 4/5 vazia");
+                }
+            };
+
+            const button_condo_3 = () => {
+                if ( Number(units) !== 0 ) 
+                {
+                  
+                  // Hides initial question
+                  $(".condo-question_3").hide();
+                  $(".condo-question_4").show();
+                  $(".button-next").unbind("click", button_condo_3);
+                  $(".button-next").bind("click", button_condo_4);
+                  consoleOutput.text("");
+                  console.log('units: ',units)
+                  question = 4;
+                } else {
+                  //
+                  consoleOutput.text("resposta 3/5 vazia");
+                }
+            };
+
+            const button_condo_2 = () => {
+                
+                if ( Number(footage) !== 0 ) 
+                {
+                  
+                  // hide current, show next
+                  $(".condo-question_2").hide();
+                  $(".condo-question_3").show();
+                  $(".button-next").unbind("click", button_condo_2);
+                  $(".button-next").bind("click", button_condo_3);
+  
+                  consoleOutput.text("");
+                  
+
+                  console.log('footage: ',footage)
+                  question = 3;
+                } else {
+                  //
+                  consoleOutput.text("resposta 2/5 vazia");
+                }
+                
+            };
+
+            const button_condo_1 = () => {
+              $(".button-next").unbind("click", button_start);
+              if ( $("input[name=condo-type]:checked", ".condo-form").val() ) 
+              {
+                
+                // Hides initial question
+                $(".condo-question_1").hide();
+                $(".condo-question_2").show();
+                $(".button-next").unbind("click", button_condo_1);
+                $(".button-next").bind("click", button_condo_2);
+                consoleOutput.text("");
+                console.log($("input[name=condo-type]:checked", ".condo-form").val())
+                question = 2;
+                // call next question
+              } else {
+                //
+                consoleOutput.text("resposta 1/5 vazia");
+              }
+              
+            };
+            $(".button-next").bind("click", button_condo_1);
+
+
+            // FORM LISTENER
+
+            // listener for 1 and 2
+            $(".condo-form input").on("change", () => {
+              
+
+              footage = $('.condo-footage').val();
+
+              address = $('.address').val();
+
+              units = $('.condo-units').val();
+
+              cost = $('.condo-cost').val();
+
+            });
+
+            $('input[type=radio][name=condo-voltage]').change(function() {
+                voltage = $(
+                "input[name=condo-voltage]:checked",
+                ".condo-form"
+                ).val();
+            });
+
+          };
+
+          
           // RESIDENCE GAME
           const residence_start = () => {
             let residenceType = false;
@@ -514,7 +665,7 @@
 
               footage = $('.footage').val();
 
-              address = $('.address').val();
+              address = $('.condo-address').val();
 
               cost = $('.cost').val();
 
@@ -540,12 +691,9 @@
 
 
 
-          // CONDO AND BUSINESS CODE BELOW
+          //  BUSINESS CODE BELOW
 
-          const condoQuestions = () => {
-            console.log("condo system start");
-          };
-
+          
           const businessQuestions = () => {
             console.log("business system start");
           };
