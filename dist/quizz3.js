@@ -79,7 +79,7 @@ jQuery(document).ready(function () {
         );
 
         $(".initial-form").hide();
-        $('.residence-form_block').removeClass('.hidden')
+        $('.residence-form_block').removeClass('hidden')
           consoleOutput.text("");
 
           if (structureType === 1) {
