@@ -79,10 +79,11 @@ jQuery(document).ready(function () {
         );
 
         $(".initial-form").hide();
-        $('.residence-form_block').removeClass('hidden')
+        
           consoleOutput.text("");
 
           if (structureType === 1) {
+            $('.residence-form_block').removeClass('hidden')
             residence_start(); // setup residence question system
           } else if (structureType === 2) {
             condoQuestions(); // setup condo question system
