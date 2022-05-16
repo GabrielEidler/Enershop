@@ -311,7 +311,6 @@ jQuery(document).ready(function () {
               JSON.stringify(userResidencia)
               console.log('quizzObject', userResidencia)
               residence_Recommendation_Calculator(userResidencia);
-              $('.residence-form_block').addClass('hidden')
             } else {
               //
               consoleOutput.text("resposta 5/5 vazia");
