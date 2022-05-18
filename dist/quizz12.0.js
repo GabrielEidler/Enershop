@@ -94,6 +94,49 @@ jQuery(document).ready(function () {
       JSON.stringify(userObject);
     }
 
+
+    const business_Recommendation_Calculator = (userObject) =>{
+      //opções GDC, GDD, INSTALAÇÃO MANUAL, CONSULTORIA, PRODUTOS COMERCIAIS, PRODUTOS RESIDENCIAIS
+      
+      $('.recommendation-block').removeClass('hidden');
+
+      if (userObject.equationScore < 9.8) {
+        if (userObject.voltage === 'a') {
+          $('.residence_s-gdd-pr').removeClass('hidden');
+        }else if (userObject.voltage === 'b'){
+
+          $('.residence_gdc-s-pr').removeClass('hidden');
+
+        }else if(userObject.voltage === 'none'){
+          if(userObject.monthlyCost > 14999){
+            $('.residence_s-gdd-pr').removeClass('hidden');
+          }else{
+
+            $('.residence_gdc-s-pr').removeClass('hidden');
+
+          }
+        }
+      }else {
+        if (userObject.voltage === 'a') {
+          $('.residence_s-gdd-pr').removeClass('hidden');
+        }else if (userObject.voltage === 'b'){
+
+          $('.residence_s-gdc-pr').removeClass('hidden');
+
+        }else if(userObject.voltage === 'none'){
+          if(userObject.monthlyCost > 14999){
+            $('.residence_s-gdd-pr').removeClass('hidden');
+          }else{
+
+            $('.residence_s-gdc-pr').removeClass('hidden');
+
+          }
+        }
+      }
+
+      JSON.stringify(userObject);
+    }
+
     const quizzSystem = () => {
       let structureType = false;
 
@@ -163,7 +206,7 @@ jQuery(document).ready(function () {
               }
               
               console.log('quizzObject', userNegocio)
-              //business_Recommendation_Calculator(userNegocio);
+              
               
               setTimeout(() => {
                 $('.recommendation-load_mask').animate({
@@ -177,6 +220,8 @@ jQuery(document).ready(function () {
               $('.business-form_block').addClass('hidden');
 
               JSON.stringify(userNegocio);
+
+              business_Recommendation_Calculator(userNegocio);
 
             } else {
               //
@@ -340,8 +385,9 @@ jQuery(document).ready(function () {
 
         $('.business_address-tag_icon').click((e)=>{
           let clickedButton = $(e.target);
-
+          console.log('Entered remove tag button listener');
           let tagText = clickedButton.siblings('.business_address-tag_title').text();
+          console.log('tagText: ', tagText);
           let tagIndex = locations.indexOf(tagText);
           locations.splice(tagIndex,1);
           console.log('item removed form locations: ', locations)
