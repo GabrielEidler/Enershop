@@ -31,48 +31,69 @@ jQuery(document).ready(function () {
 
     const residence_Recommendation_Calculator = (userObject) =>{
       //opções GDC, GDD, INSTALAÇÃO MANUAL, CONSULTORIA, PRODUTOS COMERCIAIS, PRODUTOS RESIDENCIAIS
-      //let gdc = true;
-      //let instManual = true;
-      //let consultoria = true;
-      //let prodResidenciais = true;
-      
+     
+
       $('.recommendation-block').removeClass('hidden');
 
       if (userObject.equationScore < 9.8) {
         if (userObject.type === 'apartamento') {
-          console.log('Nossa recomendação: ',{
-            r1: 'GDC',
-            r2: 'Produtos Residenciais'
-          })
           $('.residence_gdc-pr').removeClass('hidden');
         }else{
-          console.log('Nossa recomendação: ',{
-            r1: 'GDC',
-            r2: 'Serviços',
-            r3: 'Produtos Residenciais'
-          })
           $('.residence_gdc-s-pr').removeClass('hidden');
         }
       }else {
         if (userObject.type === 'apartamento') {
-          console.log('Nossa recomendação: ',{
-            r1: 'GDC',
-            r2: 'Produtos Residenciais'
-          })
           $('.residence_gdc-pr').removeClass('hidden');
         }else{
-          console.log('Nossa recomendação: ',{
-            r1: 'Serviços',
-            r2: 'GDC',
-            r3: 'Produtos Residenciais'
-          })
           $('.residence_s-gdc-pr').removeClass('hidden');
         }
 
       }
+
+      JSON.stringify(userObject);
     }
 
+    const condo_Recommendation_Calculator = (userObject) =>{
+      //opções GDC, GDD, INSTALAÇÃO MANUAL, CONSULTORIA, PRODUTOS COMERCIAIS, PRODUTOS RESIDENCIAIS
+      
+      $('.recommendation-block').removeClass('hidden');
 
+      if (userObject.equationScore < 9.8) {
+        if (userObject.voltage === 'a') {
+          $('.residence_s-gdd-pr').removeClass('hidden');
+        }else if (userObject.voltage === 'b'){
+
+          $('.residence_gdc-s-pr').removeClass('hidden');
+
+        }else if(userObject.voltage === 'none'){
+          if(userObject.monthlyCost > 14999){
+            $('.residence_s-gdd-pr').removeClass('hidden');
+          }else{
+
+            $('.residence_gdc-s-pr').removeClass('hidden');
+
+          }
+        }
+      }else {
+        if (userObject.voltage === 'a') {
+          $('.residence_s-gdd-pr').removeClass('hidden');
+        }else if (userObject.voltage === 'b'){
+
+          $('.residence_s-gdc-pr').removeClass('hidden');
+
+        }else if(userObject.voltage === 'none'){
+          if(userObject.monthlyCost > 14999){
+            $('.residence_s-gdd-pr').removeClass('hidden');
+          }else{
+
+            $('.residence_s-gdc-pr').removeClass('hidden');
+
+          }
+        }
+      }
+
+      JSON.stringify(userObject);
+    }
 
     const quizzSystem = () => {
       let structureType = false;
@@ -91,49 +112,43 @@ jQuery(document).ready(function () {
             $('.residence-form_block').removeClass('hidden')
             residence_start(); // setup residence question system
           } else if (structureType === 2) {
+            $('.condo-form_block').removeClass('hidden')
             condoQuestions(); // setup condo question system
           } else if (structureType === 3) {
+            $('.business-form_block').removeClass('hidden')
             businessQuestions(); // setup business question system
           }
       });
 
       // FIRST NEXT BUTTON
       const button_start = () => {
-        /*
-            if (
-              $("input[name=structure-type]:checked", ".initial-form").val()
-            ) {
-              // Hides initial question
-              $(".initial-form").hide();
-              consoleOutput.text("");
-
-              if (structureType === 1) {
-                residence_start(); // setup residence question system
-              } else if (structureType === 2) {
-                condoQuestions(); // setup condo question system
-              } else if (structureType === 3) {
-                businessQuestions(); // setup business question system
-              }
-            } else {
-              //
-              consoleOutput.text("Escolha uma opção antes de continuar");
-            }
-        */
         
       };
 
       $(".button-next").bind("click", button_start);
 
+      const businessQuestions = () => {
+        console.log("business system start");
+        let footage = 0;
+        let address = '';
+        let cost = 0;
+        let type = '';
+        let units = 0;
+        let voltage = '';
+        let question = 1;
+
+        
+      };
 
       const condoQuestions = () => {
         console.log("condo system start");
         let footage = 0;
-        let city = '';
+        let address = '';
         let cost = 0;
         let type = '';
-        let floors = 0;
         let units = 0;
         let voltage = '';
+        let question = 1;
 
         $(".condo-question_1").show();
         $(".button-next").unbind("click", button_start);
@@ -145,8 +160,7 @@ jQuery(document).ready(function () {
               
               consoleOutput.text("");
               console.log('cost: ',cost)
-              //question = 6;
-              let score = (cost / (footage / floors));
+              let score = (cost / (footage / units));
               var roundedScore = Math.round((score + Number.EPSILON) * 100) / 100;
 
               userCondominio = {
@@ -160,7 +174,19 @@ jQuery(document).ready(function () {
               }
               JSON.stringify(userCondominio)
               console.log('quizzObject', userCondominio)
-              //condo_Recommendation_Calculator(userCondominio);
+              condo_Recommendation_Calculator(userCondominio);
+              
+              setTimeout(() => {
+                $('.recommendation-load_mask').animate({
+                  opacity: 0,
+                }, 600, function(){
+                  $('.recommendation-load_mask').addClass('hidden');
+  
+                })
+              }, 3000);
+
+              $('.condo-form_block').addClass('hidden');
+
             } else {
               //
               consoleOutput.text("resposta 5/5 vazia");
@@ -250,6 +276,58 @@ jQuery(document).ready(function () {
         $(".button-next").bind("click", button_condo_1);
 
 
+        // Back button
+        $('.button-previous').click(()=>{
+          $(".button-next").unbind("click", button_condo_1);
+          $(".button-next").unbind("click", button_condo_2);
+          $(".button-next").unbind("click", button_condo_3);
+          $(".button-next").unbind("click", button_condo_4);
+          $(".button-next").unbind("click", button_condo_5);
+          console.log('question before: ', question)
+            switch (question) {
+                case 1:
+                    $(".condo-question_1").hide();
+                    $('.condo-form_block').addClass('hidden')
+                    $('input[name=structure-type]').prop('checked', false);
+                    structureType = false;
+                    $(".initial-form").show();
+                    $(".button-next").bind("click", button_start);
+                    question = 0;
+                    break;
+                case 2:
+                    $(".condo-question_2").hide();
+                    $(".condo-question_1").show();
+                    $(".button-next").bind("click", button_condo_1);
+                    question = 1;
+                    break;
+                case 3:
+                    $(".condo-question_3").hide();
+                    $(".condo-question_2").show();
+                    $(".button-next").bind("click", button_condo_2);
+                    question = 2;
+                    break;
+                case 4:
+                    $(".condo-question_4").hide();
+                    $(".condo-question_3").show();
+                    $(".button-next").bind("click", button_condo_3);
+                    question = 3;
+                    break;
+                case 5:
+                    $(".condo-question_5").hide();
+                    $(".condo-question_4").show();
+                    $(".button-next").bind("click", button_condo_4);
+                    question = 4;
+                    break;
+                case 6:
+                    $(".button-next").bind("click", button_condo_5);
+                    question = 5;
+                    break;
+            
+                default:
+                    break;
+            }
+        })
+
         // FORM LISTENER
 
         // listener for 1 and 2
@@ -272,6 +350,13 @@ jQuery(document).ready(function () {
             ".condo-form"
             ).val();
         });
+
+        $('input[type=radio][name=condo-type]').change(function() {
+          type = $(
+          "input[name=condo-type]:checked",
+          ".condo-form"
+          ).val();
+      });
 
       };
 
@@ -493,25 +578,10 @@ jQuery(document).ready(function () {
             ".residence-form"
             ).val();
         });
-            
-
-        
-
-        
-        
+                    
       };
-
-
-
-
-
-
-      //  BUSINESS CODE BELOW
 
       
-      const businessQuestions = () => {
-        console.log("business system start");
-      };
     };
 
     //system init
