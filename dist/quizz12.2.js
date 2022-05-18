@@ -22,8 +22,7 @@ jQuery(document).ready(function () {
       equationScore: Number,
       footage: Number,
       monthlyCost: String,
-      Type: String, // tipo de negócio, select field ou digitação
-      floors: String, // Nº de andares
+      type: String, // tipo de negócio, select field ou digitação
       locationAmount: Number, // Número de localizações
       locations: [String],
       voltage: String, // Alta,  Baixa (A ou B) ou Nãi sei (Null)
@@ -54,6 +53,49 @@ jQuery(document).ready(function () {
     }
 
     const condo_Recommendation_Calculator = (userObject) =>{
+      //opções GDC, GDD, INSTALAÇÃO MANUAL, CONSULTORIA, PRODUTOS COMERCIAIS, PRODUTOS RESIDENCIAIS
+      
+      $('.recommendation-block').removeClass('hidden');
+
+      if (userObject.equationScore < 9.8) {
+        if (userObject.voltage === 'a') {
+          $('.residence_s-gdd-pr').removeClass('hidden');
+        }else if (userObject.voltage === 'b'){
+
+          $('.residence_gdc-s-pr').removeClass('hidden');
+
+        }else if(userObject.voltage === 'none'){
+          if(userObject.monthlyCost > 14999){
+            $('.residence_s-gdd-pr').removeClass('hidden');
+          }else{
+
+            $('.residence_gdc-s-pr').removeClass('hidden');
+
+          }
+        }
+      }else {
+        if (userObject.voltage === 'a') {
+          $('.residence_s-gdd-pr').removeClass('hidden');
+        }else if (userObject.voltage === 'b'){
+
+          $('.residence_s-gdc-pr').removeClass('hidden');
+
+        }else if(userObject.voltage === 'none'){
+          if(userObject.monthlyCost > 14999){
+            $('.residence_s-gdd-pr').removeClass('hidden');
+          }else{
+
+            $('.residence_s-gdc-pr').removeClass('hidden');
+
+          }
+        }
+      }
+
+      JSON.stringify(userObject);
+    }
+
+
+    const business_Recommendation_Calculator = (userObject) =>{
       //opções GDC, GDD, INSTALAÇÃO MANUAL, CONSULTORIA, PRODUTOS COMERCIAIS, PRODUTOS RESIDENCIAIS
       
       $('.recommendation-block').removeClass('hidden');
@@ -133,12 +175,266 @@ jQuery(document).ready(function () {
         let address = '';
         let cost = 0;
         let type = '';
-        let units = 0;
+        let locationAmount = 0;
+        let locations= [];
         let voltage = '';
         let question = 1;
+        let tagCounter = 0;
+        let tagButton = $('.business-address_tag');
 
+        $(".business-question_1").show();
+        $(".button-next").unbind("click", button_start);
         
+        const button_business_5 = () => {
+
+            if ( Number(cost) !== 0 ) 
+            {
+              
+              consoleOutput.text("");
+              console.log('cost: ',cost)
+              let score = (cost / (footage / locationAmount));
+              var roundedScore = Math.round((score + Number.EPSILON) * 100) / 100;
+
+              userNegocio = {
+                equationScore: roundedScore,
+                footage: footage,
+                monthyCost: cost,
+                type: type, 
+                locationAmount: locationAmount, 
+                locations: locations,
+                voltage: voltage
+              }
+              
+              console.log('quizzObject', userNegocio)
+              
+              
+              setTimeout(() => {
+                $('.recommendation-load_mask').animate({
+                  opacity: 0,
+                }, 600, function(){
+                  $('.recommendation-load_mask').addClass('hidden');
+  
+                })
+              }, 3000);
+
+              $('.business-form_block').addClass('hidden');
+
+              JSON.stringify(userNegocio);
+
+              business_Recommendation_Calculator(userNegocio);
+
+            } else {
+              //
+              consoleOutput.text("resposta 5/5 vazia");
+            }
+        };
+
+        const button_business_4 = () => {
+            address = $('.business-address').val();
+            if ( address !== '' && locations.length > 0 ) 
+            {
+              console.log('locations', locations)
+
+              // Hides initial question
+              $(".business-question_4").hide();
+              $(".business-question_5").show();
+              $(".button-next").unbind("click", button_business_4);
+              $(".button-next").bind("click", button_business_5);
+              consoleOutput.text("");
+              console.log('address: ',address)
+              question = 5;
+            } else {
+              //
+              consoleOutput.text("resposta 4/5 vazia");
+            }
+        };
+
+        const button_business_3 = () => {
+            if ( Number(locationAmount) !== 0 ) 
+            {
+              
+              // Hides initial question
+              $(".business-question_3").hide();
+              $(".business-question_4").show();
+              $(".button-next").unbind("click", button_business_3);
+              $(".button-next").bind("click", button_business_4);
+              consoleOutput.text("");
+              console.log('locationAmount: ',locationAmount)
+              question = 4;
+            } else {
+              //
+              consoleOutput.text("resposta 3/5 vazia");
+            }
+        };
+
+        const button_business_2 = () => {
+            
+            if ( Number(footage) !== 0 ) 
+            {
+              
+              // hide current, show next
+              $(".business-question_2").hide();
+              $(".business-question_3").show();
+              $(".button-next").unbind("click", button_business_2);
+              $(".button-next").bind("click", button_business_3);
+
+              consoleOutput.text("");
+              
+
+              console.log('footage: ',footage)
+              question = 3;
+            } else {
+              //
+              consoleOutput.text("resposta 2/5 vazia");
+            }
+            
+        };
+
+        const button_business_1 = () => {
+          $(".button-next").unbind("click", button_start);
+          if ( $(".business-type option:selected").val() ) 
+          {
+            
+            // Hides initial question
+            $(".business-question_1").hide();
+            $(".business-question_2").show();
+            $(".button-next").unbind("click", button_business_1);
+            $(".button-next").bind("click", button_business_2);
+            consoleOutput.text("");
+            type = $( ".business-type option:selected").val();
+            console.log($( ".business-type option:selected").val())
+            question = 2;
+            // call next question
+          } else {
+            //
+            consoleOutput.text("resposta 1/5 vazia");
+          }
+          
+        };
+        $(".button-next").bind("click", button_business_1);
+
+        // Back button
+        $('.button-previous').click(()=>{
+          $(".button-next").unbind("click", button_business_1);
+          $(".button-next").unbind("click", button_business_2);
+          $(".button-next").unbind("click", button_business_3);
+          $(".button-next").unbind("click", button_business_4);
+          $(".button-next").unbind("click", button_business_5);
+          console.log('question before: ', question)
+            switch (question) {
+                case 1:
+                    $(".business-question_1").hide();
+                    $('.business-form_block').addClass('hidden')
+                    $('input[name=structure-type]').prop('checked', false);
+                    structureType = false;
+                    $(".initial-form").show();
+                    $(".button-next").bind("click", button_start);
+                    question = 0;
+                    break;
+                case 2:
+                    $(".business-question_2").hide();
+                    $(".business-question_1").show();
+                    $(".button-next").bind("click", button_business_1);
+                    question = 1;
+                    break;
+                case 3:
+                    $(".business-question_3").hide();
+                    $(".business-question_2").show();
+                    $(".button-next").bind("click", button_business_2);
+                    question = 2;
+                    break;
+                case 4:
+                    $(".business-question_4").hide();
+                    $(".business-question_3").show();
+                    $(".button-next").bind("click", button_business_3);
+                    question = 3;
+                    break;
+                case 5:
+                    $(".business-question_5").hide();
+                    $(".business-question_4").show();
+                    $(".button-next").bind("click", button_business_4);
+                    question = 4;
+                    break;
+                case 6:
+                    $(".button-next").bind("click", button_business_5);
+                    question = 5;
+                    break;
+            
+                default:
+                    break;
+            }
+        })
+        
+        const removeButtonListener = () =>{
+          $('.business_address-tag_icon').click((e)=>{
+            let clickedButton = $(e.target);
+            console.log('Entered remove tag button listener');
+            let tagText = clickedButton.siblings('.business_address-tag_title').text();
+            console.log('tagText: ', tagText);
+            let tagIndex = locations.indexOf(tagText);
+            locations.splice(tagIndex,1);
+            console.log('item removed form locations: ', locations)
+  
+            clickedButton.parent().remove();
+          })
+        }
+
+        $('.business-address_plus-button').click(()=>{
+          address = $('.business-address').val();
+          if(address) locations.push(address);
+          console.log ('address added: ', address)
+          tagCounter = tagCounter + 1;
+
+          if(tagCounter === 1 ){
+            $('.business_address-tag_title').text(address);
+          }else{
+            tagButton.clone().appendTo('.business_address-tag_wrapper')
+
+            $('.business-address_tag').each((index, element) => {
+              $(element).find('.business_address-tag_title').text(locations[index]);
+            });
+          }
+          $('.business-address').text('');
+
+          removeButtonListener();
+        })
+
+        $('.business_address-tag_icon').click((e)=>{
+          let clickedButton = $(e.target);
+          console.log('Entered remove tag button listener');
+          let tagText = clickedButton.siblings('.business_address-tag_title').text();
+          console.log('tagText: ', tagText);
+          let tagIndex = locations.indexOf(tagText);
+          locations.splice(tagIndex,1);
+          console.log('item removed form locations: ', locations)
+
+          clickedButton.parent().remove();
+        })
+
+        // FORM LISTENER
+        $(".business-form input").on("change", () => {
+
+          footage = $('.business-footage').val();
+
+          address = $('.business-address').val();
+
+          locationAmount = $('.business-locations').val();
+
+          cost = $('.business-cost').val();
+
+        });
+
+        $('input[type=radio][name=business-voltage]').change(function() {
+          voltage = $(
+          "input[name=business-voltage]:checked",
+          ".business-form"
+          ).val();
+      });
+
       };
+
+
+      // ------------ CONDO ------------- //
 
       const condoQuestions = () => {
         console.log("condo system start");
@@ -329,8 +625,6 @@ jQuery(document).ready(function () {
         })
 
         // FORM LISTENER
-
-        // listener for 1 and 2
         $(".condo-form input").on("change", () => {
           
 

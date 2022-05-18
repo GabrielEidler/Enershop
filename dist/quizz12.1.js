@@ -366,22 +366,16 @@ jQuery(document).ready(function () {
         })
         
         const removeButtonListener = () =>{
-          $('.business-address_plus-button').click(()=>{
-            address = $('.business-address').val();
-            if(address) locations.push(address);
-            console.log ('address added: ', address)
-            tagCounter = tagCounter + 1;
+          $('.business_address-tag_icon').click((e)=>{
+            let clickedButton = $(e.target);
+            console.log('Entered remove tag button listener');
+            let tagText = clickedButton.siblings('.business_address-tag_title').text();
+            console.log('tagText: ', tagText);
+            let tagIndex = locations.indexOf(tagText);
+            locations.splice(tagIndex,1);
+            console.log('item removed form locations: ', locations)
   
-            if(tagCounter === 1 ){
-              $('.business_address-tag_title').text(address);
-            }else{
-              tagButton.clone().appendTo('.business_address-tag_wrapper')
-  
-              $('.business-address_tag').each((index, element) => {
-                $(element).find('.business_address-tag_title').text(locations[index]);
-              });
-            }
-            $('.business-address').text('');
+            clickedButton.parent().remove();
           })
         }
 
