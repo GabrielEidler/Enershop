@@ -495,7 +495,8 @@ jQuery(document).ready(function () {
             address = $('.condo-address').val();
             if ( address !== '' ) 
             {
-              
+              $('.quizz_progress-bar_inner').css('width','100%');
+            $('.progress-bar_text').text('5/5');
               // Hides initial question
               $(".condo-question_4").hide();
               $(".condo-question_5").show();
@@ -513,7 +514,8 @@ jQuery(document).ready(function () {
         const button_condo_3 = () => {
             if ( Number(units) !== 0 ) 
             {
-              
+              $('.quizz_progress-bar_inner').css('width','80%');
+            $('.progress-bar_text').text('4/5');
               // Hides initial question
               $(".condo-question_3").hide();
               $(".condo-question_4").show();
@@ -538,7 +540,8 @@ jQuery(document).ready(function () {
               $(".condo-question_3").show();
               $(".button-next").unbind("click", button_condo_2);
               $(".button-next").bind("click", button_condo_3);
-
+              $('.quizz_progress-bar_inner').css('width','60%');
+              $('.progress-bar_text').text('3/5');
               consoleOutput.text("");
               
 
@@ -563,6 +566,8 @@ jQuery(document).ready(function () {
             $(".button-next").bind("click", button_condo_2);
             consoleOutput.text("");
             console.log($("input[name=condo-type]:checked", ".condo-form").val())
+            $('.quizz_progress-bar_inner').css('width','40%');
+            $('.progress-bar_text').text('2/5');
             question = 2;
             // call next question
           } else {
