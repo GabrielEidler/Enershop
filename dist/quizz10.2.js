@@ -99,26 +99,6 @@ jQuery(document).ready(function () {
 
       // FIRST NEXT BUTTON
       const button_start = () => {
-        /*
-            if (
-              $("input[name=structure-type]:checked", ".initial-form").val()
-            ) {
-              // Hides initial question
-              $(".initial-form").hide();
-              consoleOutput.text("");
-
-              if (structureType === 1) {
-                residence_start(); // setup residence question system
-              } else if (structureType === 2) {
-                condoQuestions(); // setup condo question system
-              } else if (structureType === 3) {
-                businessQuestions(); // setup business question system
-              }
-            } else {
-              //
-              consoleOutput.text("Escolha uma opção antes de continuar");
-            }
-        */
         
       };
 
@@ -248,6 +228,58 @@ jQuery(document).ready(function () {
         };
         $(".button-next").bind("click", button_condo_1);
 
+
+        // Back button
+        $('.button-previous').click(()=>{
+          $(".button-next").unbind("click", button_condo_1);
+          $(".button-next").unbind("click", button_condo_2);
+          $(".button-next").unbind("click", button_condo_3);
+          $(".button-next").unbind("click", button_condo_4);
+          $(".button-next").unbind("click", button_condo_5);
+          console.log('question before: ', question)
+            switch (question) {
+                case 1:
+                    $(".condo-question_1").hide();
+                    $('.condo-form_block').addClass('hidden')
+                    $('input[name=structure-type]').prop('checked', false);
+                    structureType = false;
+                    $(".initial-form").show();
+                    $(".button-next").bind("click", button_start);
+                    question = 0;
+                    break;
+                case 2:
+                    $(".condo-question_2").hide();
+                    $(".condo-question_1").show();
+                    $(".button-next").bind("click", button_condo_1);
+                    question = 1;
+                    break;
+                case 3:
+                    $(".condo-question_3").hide();
+                    $(".condo-question_2").show();
+                    $(".button-next").bind("click", button_condo_2);
+                    question = 2;
+                    break;
+                case 4:
+                    $(".condo-question_4").hide();
+                    $(".condo-question_3").show();
+                    $(".button-next").bind("click", button_condo_3);
+                    question = 3;
+                    break;
+                case 5:
+                    $(".condo-question_5").hide();
+                    $(".condo-question_4").show();
+                    $(".button-next").bind("click", button_condo_4);
+                    question = 4;
+                    break;
+                case 6:
+                    $(".button-next").bind("click", button_condo_5);
+                    question = 5;
+                    break;
+            
+                default:
+                    break;
+            }
+        })
 
         // FORM LISTENER
 
