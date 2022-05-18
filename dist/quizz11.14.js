@@ -324,8 +324,6 @@ jQuery(document).ready(function () {
           if(address) locations.push(address);
           console.log ('address added: ', address)
           tagCounter = tagCounter + 1;
-          //let createdTag = $('<div class="business-address_tag"><h5 class="business_address-tag_title">placeholder</h5> <img class="business_address-tag_icon" src="https://uploads-ssl.webflow.com/623a277a8114641bbe232243/62854c1d96afa41e4454ae73_close-button.svg" > </div>').appendTo('.business_address-tag_wrapper');
-           // createdTag.text(address)
 
           if(tagCounter === 1 ){
             $('.business_address-tag_title').text(address);
@@ -340,9 +338,7 @@ jQuery(document).ready(function () {
 
         $('.business_address-tag_icon').click((e)=>{
           let clickedButton = $(e.target);
-          if(clickedButton.hasClass('business_address-tag_icon')){
-            clickedButton.remove();
-          }
+          clickedButton.parent().remove();
         })
 
         // FORM LISTENER
