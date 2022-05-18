@@ -312,6 +312,17 @@ jQuery(document).ready(function () {
               console.log('quizzObject', userResidencia)
               $('.residence-form_block').addClass('hidden')
               residence_Recommendation_Calculator(userResidencia);
+
+              setTimeout(() => {
+                $('.recommendation-load_mask').animate({
+                  opacity: 0,
+                }, 300, function(){
+                  $('.recommendation-load_mask').addClass('hidden');
+  
+                })
+              }, 2000);
+
+              
             } else {
               //
               consoleOutput.text("resposta 5/5 vazia");
